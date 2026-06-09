@@ -1,6 +1,6 @@
 {
-  "name": "single-flight",
-  "version": "1.0.0",
+  "name": "@eluneevermore/single-flight",
+  "version": "1.0.1",
   "description": "Deduplicate concurrent async work with local and distributed coordination channels.",
   "license": "MIT",
   "author": "eluneevermore",

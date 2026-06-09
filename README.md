@@ -1,4 +1,4 @@
-# single-flight
+# @eluneevermore/single-flight
 
 Deduplicate concurrent function calls. When multiple callers request the same work simultaneously, only one execution runs and all callers share the result.
 
@@ -7,13 +7,13 @@ Works across processes and machines via pluggable **Channel** implementations (R
 ## Installation
 
 ```bash
-pnpm add single-flight
+pnpm add @eluneevermore/single-flight
 ```
 
 If you want the Redis channel:
 
 ```bash
-pnpm add single-flight ioredis
+pnpm add @eluneevermore/single-flight ioredis
 ```
 
 ## Usage
@@ -21,7 +21,7 @@ pnpm add single-flight ioredis
 ### Direct
 
 ```ts
-import { SingleFlightGroup } from "single-flight"
+import { SingleFlightGroup } from "@eluneevermore/single-flight"
 
 const sf = new SingleFlightGroup()
 
@@ -36,7 +36,7 @@ const [a, b] = await Promise.all([
 ### Wrapper function
 
 ```ts
-import { withSingleFlight } from "single-flight"
+import { withSingleFlight } from "@eluneevermore/single-flight"
 
 const getUser = withSingleFlight(
   (id: number) => fetchUser(id),
@@ -50,7 +50,7 @@ await Promise.all([getUser(1), getUser(1), getUser(2)])
 ### Decorator
 
 ```ts
-import { SingleFlight } from "single-flight"
+import { SingleFlight } from "@eluneevermore/single-flight"
 
 class UserService {
   @SingleFlight((id: number) => `user:${id}`)
@@ -65,8 +65,8 @@ class UserService {
 Without a channel, deduplication is local to the process. To deduplicate across processes or machines, provide a `Channel` implementation:
 
 ```ts
-import { SingleFlightGroup } from "single-flight"
-import { RedisChannel } from "single-flight/channels/redis"
+import { SingleFlightGroup } from "@eluneevermore/single-flight"
+import { RedisChannel } from "@eluneevermore/single-flight/channels/redis"
 
 const sf = new SingleFlightGroup({
   channel: new RedisChannel(redisClient),
@@ -96,7 +96,7 @@ On timeout, waiters reject with `SingleFlightTimeoutError` and automatically cle
 A channel coordinates lock acquisition and result broadcasting across processes. The protocol is **subscribe -> acquire -> release**:
 
 ```ts
-import type { Channel, Result, Subscription } from "single-flight"
+import type { Channel, Result, Subscription } from "@eluneevermore/single-flight"
 
 class MyChannel implements Channel {
   async subscribe(key: string): Promise<Subscription> { /* ... */ }
@@ -112,8 +112,8 @@ class MyChannel implements Channel {
 
 | Channel | Import | Scope |
 |---------|--------|-------|
-| `LocalChannel` | `single-flight/channels/local` | Single process (testing) |
-| `RedisChannel` | `single-flight/channels/redis` | Distributed (multi-process/machine) |
+| `LocalChannel` | `@eluneevermore/single-flight/channels/local` | Single process (testing) |
+| `RedisChannel` | `@eluneevermore/single-flight/channels/redis` | Distributed (multi-process/machine) |
 
 ## API
 
