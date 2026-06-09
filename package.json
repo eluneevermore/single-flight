@@ -1,0 +1,61 @@
+{
+  "name": "single-flight",
+  "version": "1.0.0",
+  "description": "Deduplicate concurrent async work with local and distributed coordination channels.",
+  "license": "MIT",
+  "author": "eluneevermore",
+  "type": "module",
+  "packageManager": "pnpm@10.33.0",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.mts",
+      "import": "./dist/index.mjs",
+      "default": "./dist/index.mjs"
+    },
+    "./channels/local": {
+      "types": "./dist/channels/local.d.mts",
+      "import": "./dist/channels/local.mjs",
+      "default": "./dist/channels/local.mjs"
+    },
+    "./channels/redis": {
+      "types": "./dist/channels/redis.d.mts",
+      "import": "./dist/channels/redis.mjs",
+      "default": "./dist/channels/redis.mjs"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eluneevermore/single-flight.git"
+  },
+  "homepage": "https://github.com/eluneevermore/single-flight#readme",
+  "bugs": {
+    "url": "https://github.com/eluneevermore/single-flight/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "pkgroll --clean-dist",
+    "clean": "rm -rf dist",
+    "test": "vitest --typecheck",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^25.6.0",
+    "ioredis": "^5.10.1",
+    "pkgroll": "^2.27.0",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.5"
+  },
+  "peerDependencies": {
+    "ioredis": ">=5"
+  },
+  "peerDependenciesMeta": {
+    "ioredis": {
+      "optional": true
+    }
+  }
+}
